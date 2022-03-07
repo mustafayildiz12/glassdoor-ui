@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -10,6 +11,23 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Color greenColor = const Color(0xFF0DAA41);
+  late ScrollController _scrollController;
+
+  _scrollListener() {
+    if (_scrollController.position.maxScrollExtent * 35 / 100 >= 300) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  @override
+  void initState() {
+    _scrollController = ScrollController();
+    _scrollController.addListener(_scrollListener);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,33 +38,11 @@ class _HomePageState extends State<HomePage> {
             SizedBox(
               height: 3.h,
             ),
-            Padding(
-              padding: EdgeInsets.only(left: 3.w),
-              child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    "Jobs at top Rated Companies",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w700),
-                  )),
-            ),
+            leftBigTitle("Jobs at top Rated Companies"),
             SizedBox(
               height: 2.h,
             ),
-            Padding(
-              padding: EdgeInsets.only(left: 3.w),
-              child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    "See the best companies to work for",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 10.sp,
-                        fontWeight: FontWeight.w400),
-                  )),
-            ),
+            leftBigSubTitle("See the best companies to work for"),
             SizedBox(
               height: 5.h,
             ),
@@ -57,17 +53,179 @@ class _HomePageState extends State<HomePage> {
                     6,
                     (index) => Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: jobListHorizontal(index),
+                          child: jobListHorizontal(index, 13),
                         )),
               ),
-            )
+            ),
+            greyDivider(),
+            SizedBox(
+              height: 2.h,
+            ),
+            leftBigTitle("Get notified of news jobs"),
+            SizedBox(
+              height: 1.2.h,
+            ),
+            leftBigSubTitle(
+                "Tired of searching jobs? Create a job alert to see the freshest jobs daily"),
+            SizedBox(
+              height: 2.h,
+            ),
+            alertButton(),
+            SizedBox(
+              height: 2.h,
+            ),
+            greyDivider(),
+            SizedBox(
+              height: 2.h,
+            ),
+            savedRow(),
+            SizedBox(
+              height: 2.h,
+            ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: List.generate(
+                    6,
+                    (index) => Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: jobListHorizontal(index, 24),
+                        )),
+              ),
+            ),
+            greyDivider(),
+            SizedBox(
+              height: 1.4.h,
+            ),
+            leftBigTitle("Suggested Searches"),
+            Divider(
+              thickness: 0.4,
+              color: Colors.blueGrey.withOpacity(0.6),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 3.w),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      Text(
+                        "Flutter",
+                        style: TextStyle(color: Color(0xFF1861BF)),
+                      ),
+                      Text("Remote (Work From Home), US")
+                    ],
+                  ),
+                  Icon(
+                    Icons.arrow_right,
+                    size: 24.sp,
+                    color: const Color(0xFF1861BF),
+                  )
+                ],
+              ),
+            ),
+            Divider(
+              thickness: 0.4,
+              color: Colors.blueGrey.withOpacity(0.6),
+            ),
+            greyDivider()
           ],
         ),
       ),
     );
   }
 
-  SizedBox jobListHorizontal(int index) {
+  Padding savedRow() {
+    return Padding(
+      padding: EdgeInsets.only(right: 3.w),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          leftBigTitle("Saved"),
+          Row(
+            children: [
+              Text(
+                "See All",
+                style: TextStyle(
+                    color: const Color(0xFF1861BF),
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w700),
+              ),
+              SizedBox(
+                width: 1.w,
+              ),
+              Icon(
+                CupertinoIcons.arrow_right_circle_fill,
+                size: 12.sp,
+                color: const Color(0xFF1861BF),
+              )
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Padding alertButton() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 3.w),
+      child: Container(
+        height: 6.h,
+        width: 100.w,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            color: const Color(0xFF1861BF),
+            borderRadius: BorderRadius.circular(1.w)),
+        child: Text(
+          "Create Job Alert",
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 13.sp,
+              fontWeight: FontWeight.w500),
+        ),
+      ),
+    );
+  }
+
+  Divider greyDivider() {
+    return Divider(
+      thickness: 1.3.h,
+      color: Colors.grey.withOpacity(0.6),
+    );
+  }
+
+  Padding leftBigSubTitle(String subtitle) {
+    return Padding(
+      padding: EdgeInsets.only(left: 3.w, right: 3.w),
+      child: Align(
+          alignment: Alignment.topLeft,
+          child: Text(
+            subtitle,
+            style: TextStyle(
+                color: Colors.black,
+                fontSize: 10.sp,
+                fontWeight: FontWeight.w400),
+          )),
+    );
+  }
+
+  Padding leftBigTitle(String title) {
+    return Padding(
+      padding: EdgeInsets.only(left: 3.w),
+      child: Align(
+          alignment: Alignment.topLeft,
+          child: Text(
+            title,
+            style: TextStyle(
+                color: Colors.black,
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w700),
+          )),
+    );
+  }
+
+  SizedBox jobListHorizontal(int index, int carp) {
     return SizedBox(
       width: 30.w,
       child: Column(
@@ -83,7 +241,7 @@ class _HomePageState extends State<HomePage> {
               width: 20.w,
               height: 20.w,
               child: Image.network(
-                "https://picsum.photos/id/${(index * 12)}/200",
+                "https://picsum.photos/id/${(index * carp)}/200",
                 fit: BoxFit.cover,
               ),
             ),

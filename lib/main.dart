@@ -19,6 +19,9 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Sizer',
           theme: ThemeData(
+              textTheme: Theme.of(context).textTheme.apply(
+                    fontFamily: 'Poppins',
+                  ),
               iconTheme: const IconThemeData(color: Color(0xFFFFFDFD))),
           home: const TapNavigationBar(),
         );
