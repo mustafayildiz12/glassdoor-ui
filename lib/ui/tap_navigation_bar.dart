@@ -2,7 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../pages/home.dart';
+import '../pages/me.dart';
+import '../pages/notifications.dart';
 import '../pages/saved.dart';
+import '../pages/write.dart';
 
 class TapNavigationBar extends StatefulWidget {
   const TapNavigationBar({Key? key}) : super(key: key);
@@ -58,18 +61,12 @@ class _TapNavigationBarState extends State<TapNavigationBar>
               ),
             ]),
       ),
-      body: TabBarView(controller: tabController, children: <Widget>[
-        const HomePage(),
-        const SavedPage(),
-        Container(
-          color: Colors.blue,
-        ),
-        Container(
-          color: Colors.brown,
-        ),
-        Container(
-          color: Colors.amber,
-        ),
+      body: TabBarView(controller: tabController, children: const <Widget>[
+        HomePage(),
+        SavedPage(),
+        NotificationsPage(),
+        MePage(),
+        WritePage()
       ]),
     );
   }

@@ -11,22 +11,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Color greenColor = const Color(0xFF0DAA41);
-  late ScrollController _scrollController;
-
-  _scrollListener() {
-    if (_scrollController.position.maxScrollExtent * 35 / 100 >= 300) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  @override
-  void initState() {
-    _scrollController = ScrollController();
-    _scrollController.addListener(_scrollListener);
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
